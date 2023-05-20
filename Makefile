@@ -23,15 +23,15 @@ PKG_BUILD_PARALLEL:=1
 
 include $(INCLUDE_DIR)/package.mk
 
-define Package/UDPspeeder
+define Package/udpspeeder
 	SECTION:=net
 	CATEGORY:=Network
 	TITLE:=UDP Network Speed-Up Tool
-	URL:=https://github.com/wangyu-/UDPspeeder
+	URL:=https://github.com/wangyu-/udpspeeder
 	DEPENDS:= +libstdcpp +librt +libatomic
 endef
 
-define Package/UDPspeeder/description
+define Package/udpspeeder/description
 	 A Tunnel which Improves your Network Quality on a High-latency Lossy Link by using Forward Error Correction,for All Traffics(TCP/UDP/ICMP)
 endef
 
@@ -45,9 +45,12 @@ define Build/Prepare
 	$(Build/Patch)
 endef
 
-define Package/UDPspeeder/install
+define Package/udpspeeder/install
 	$(INSTALL_DIR) $(1)/usr/bin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/speederv2_cross $(1)/usr/bin/udpspeeder
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/udpspeeder_cross $(1)/usr/bin/udpspeeder
+
+	$(INSTALL_DIR) $(1)/etc/init.d
+	$(INSTALL_BIN) ./files/udpspeeder-init $(1)/etc/init.d/udpspeeder
 endef
 
-$(eval $(call BuildPackage,UDPspeeder))
+$(eval $(call BuildPackage,udpspeeder))
